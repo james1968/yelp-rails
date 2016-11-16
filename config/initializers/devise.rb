@@ -7,7 +7,8 @@ Devise.setup do |config|
   # Devise will use the `secret_key_base` as its `secret_key`
   # by default. You can change it below and use your own secret key.
   # config.secret_key = '40ce927ae94ddf1251d4cdf1624bf8c36925cd040f6e4172eed843cf10028a0cc827740bbee9a413434ba4365b24b2f8ff87e9d83a2b3da81d7a1cde005101af'
-
+  config.omniauth :facebook, ,
+                  callback_url: "http://localhost:3000"
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -16,6 +17,7 @@ Devise.setup do |config|
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
+
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
