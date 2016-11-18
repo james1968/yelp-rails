@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'spec_helper'
 
 feature 'restaurants' do
 
@@ -21,9 +22,19 @@ context 'restaurants have been added' do
   end
 end
 
+context 'can\'t create restaurant when not logged in' do
+  scenario 'takes user to login page if not logged in' do
+    visit '/restaurants'
+    click_link 'Add a restaurant'
+    expect(current_path).to eq '/users/sign_in'
+  end
+end
+
+
 context 'creating restaurants' do
   scenario 'prompts user to fill out a form, then displays the new restaurant' do
     visit '/restaurants'
+    sign_up
     click_link 'Add a restaurant'
     fill_in 'Name', with: 'KFC'
     click_button 'Create Restaurant'
@@ -49,6 +60,7 @@ end
 
     scenario 'let a user edit a restaurant' do
       visit '/restaurants'
+      sign_up
       click_link 'Edit KFC'
       fill_in 'Name', with: 'Kentucky Fried Chicken'
       fill_in 'Description', with: 'Deep fried goodness'
@@ -63,6 +75,7 @@ end
     before { Restaurant.create name: 'KFC', description: 'Deep fired goodness' }
 
     scenario 'removes a restaurant when a user clicks a delete link' do
+      sign_up
       visit 'restaurants'
       click_link 'Delete KFC'
       expect(page).not_to have_content 'KFC'
@@ -71,6 +84,7 @@ end
   end
   context 'an invalid restaurant' do
     scenario 'does not let you submit a name that is too short' do
+      sign_up
       visit '/restaurants'
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'kf'
